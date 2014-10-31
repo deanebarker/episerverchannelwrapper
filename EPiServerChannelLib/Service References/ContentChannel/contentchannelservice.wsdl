@@ -1,0 +1,879 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://schemas.episerver.com/WebServices/v5/" xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  targetNamespace="http://schemas.episerver.com/WebServices/v5/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://schemas.episerver.com/WebServices/v5/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="ValidateWebServiceAccess">
+        <s:complexType />
+      </s:element>
+      <s:element name="ValidateWebServiceAccessResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ImportFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="expectMoreData" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="channelRelativeFilePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFile2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="expectMoreData" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="fileId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="channelRelativeFilePath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataValues" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ImportFile2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportFile2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFile3">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="expectMoreData" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="fileId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="contentId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFile3Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportFile3Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFile4">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="expectMoreData" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="fileId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFile4Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportFile4Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFileMetadata">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="virtualFilePath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="metadataValues" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportFileMetadataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportFileMetadataResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMaxRequestLength">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMaxRequestLengthResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetMaxRequestLengthResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDataToFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="virtualFilePath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="expectMoreData" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDataToFileResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="virtualFilePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFileResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteFile2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFile2Response">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteDirectory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="virtualFilePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDirectoryResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ImportPage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyValues" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportPageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ImportPageResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contentName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyValues" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ImportContentResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportPage2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="cultureName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="parentPageId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageTypeName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportPage2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ImportPage2Result" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportContent2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contentName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyKeys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyValues" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="cultureName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="contentId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="parentContentId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="contentTypeName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportContent2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ImportContent2Result" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="contentId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteContentResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeletePageLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="cultureName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePageLanguageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteContentLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="contentId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="cultureName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteContentLanguageResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ValidateWebServiceAccessSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateWebServiceAccess" />
+  </wsdl:message>
+  <wsdl:message name="ValidateWebServiceAccessSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateWebServiceAccessResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportFileSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportFile" />
+  </wsdl:message>
+  <wsdl:message name="ImportFileSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile2SoapIn">
+    <wsdl:part name="parameters" element="tns:ImportFile2" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile2SoapOut">
+    <wsdl:part name="parameters" element="tns:ImportFile2Response" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile3SoapIn">
+    <wsdl:part name="parameters" element="tns:ImportFile3" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile3SoapOut">
+    <wsdl:part name="parameters" element="tns:ImportFile3Response" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile4SoapIn">
+    <wsdl:part name="parameters" element="tns:ImportFile4" />
+  </wsdl:message>
+  <wsdl:message name="ImportFile4SoapOut">
+    <wsdl:part name="parameters" element="tns:ImportFile4Response" />
+  </wsdl:message>
+  <wsdl:message name="ImportFileMetadataSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportFileMetadata" />
+  </wsdl:message>
+  <wsdl:message name="ImportFileMetadataSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportFileMetadataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMaxRequestLengthSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMaxRequestLength" />
+  </wsdl:message>
+  <wsdl:message name="GetMaxRequestLengthSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMaxRequestLengthResponse" />
+  </wsdl:message>
+  <wsdl:message name="AppendDataToFileSoapIn">
+    <wsdl:part name="parameters" element="tns:AppendDataToFile" />
+  </wsdl:message>
+  <wsdl:message name="AppendDataToFileSoapOut">
+    <wsdl:part name="parameters" element="tns:AppendDataToFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFileSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteFile" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFileSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFile2SoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteFile2" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFile2SoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteFile2Response" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDirectorySoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteDirectory" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDirectorySoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteDirectoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportPageSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportPage" />
+  </wsdl:message>
+  <wsdl:message name="ImportPageSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportContentSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportContent" />
+  </wsdl:message>
+  <wsdl:message name="ImportContentSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportPage2SoapIn">
+    <wsdl:part name="parameters" element="tns:ImportPage2" />
+  </wsdl:message>
+  <wsdl:message name="ImportPage2SoapOut">
+    <wsdl:part name="parameters" element="tns:ImportPage2Response" />
+  </wsdl:message>
+  <wsdl:message name="ImportContent2SoapIn">
+    <wsdl:part name="parameters" element="tns:ImportContent2" />
+  </wsdl:message>
+  <wsdl:message name="ImportContent2SoapOut">
+    <wsdl:part name="parameters" element="tns:ImportContent2Response" />
+  </wsdl:message>
+  <wsdl:message name="DeletePageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletePage" />
+  </wsdl:message>
+  <wsdl:message name="DeletePageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletePageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteContent" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeletePageLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletePageLanguage" />
+  </wsdl:message>
+  <wsdl:message name="DeletePageLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletePageLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteContentLanguage" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteContentLanguageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ContentChannelServiceSoap">
+    <wsdl:operation name="ValidateWebServiceAccess">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates that current user is permitted webservice acess</wsdl:documentation>
+      <wsdl:input message="tns:ValidateWebServiceAccessSoapIn" />
+      <wsdl:output message="tns:ValidateWebServiceAccessSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a file relative settings in a registered channel</wsdl:documentation>
+      <wsdl:input message="tns:ImportFileSoapIn" />
+      <wsdl:output message="tns:ImportFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a file relative settings in a registered channel</wsdl:documentation>
+      <wsdl:input name="ImportFile2" message="tns:ImportFile2SoapIn" />
+      <wsdl:output name="ImportFile2" message="tns:ImportFile2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a file relative settings in a registered channel</wsdl:documentation>
+      <wsdl:input name="ImportFile3" message="tns:ImportFile3SoapIn" />
+      <wsdl:output name="ImportFile3" message="tns:ImportFile3SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a file relative settings in a registered channel</wsdl:documentation>
+      <wsdl:input name="ImportFile4" message="tns:ImportFile4SoapIn" />
+      <wsdl:output name="ImportFile4" message="tns:ImportFile4SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportFileMetadata">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Imports metadata for a file</wsdl:documentation>
+      <wsdl:input message="tns:ImportFileMetadataSoapIn" />
+      <wsdl:output message="tns:ImportFileMetadataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxRequestLength">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informs the client what the max size of data that the server will accept is.</wsdl:documentation>
+      <wsdl:input message="tns:GetMaxRequestLengthSoapIn" />
+      <wsdl:output message="tns:GetMaxRequestLengthSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AppendDataToFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Appends data to a file</wsdl:documentation>
+      <wsdl:input message="tns:AppendDataToFileSoapIn" />
+      <wsdl:output message="tns:AppendDataToFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a file</wsdl:documentation>
+      <wsdl:input message="tns:DeleteFileSoapIn" />
+      <wsdl:output message="tns:DeleteFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a file</wsdl:documentation>
+      <wsdl:input name="DeleteFile2" message="tns:DeleteFile2SoapIn" />
+      <wsdl:output name="DeleteFile2" message="tns:DeleteFile2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDirectory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a directory</wsdl:documentation>
+      <wsdl:input message="tns:DeleteDirectorySoapIn" />
+      <wsdl:output message="tns:DeleteDirectorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a page according to seetings in registered channel</wsdl:documentation>
+      <wsdl:input message="tns:ImportPageSoapIn" />
+      <wsdl:output message="tns:ImportPageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a content isntance according to settings in registered channel</wsdl:documentation>
+      <wsdl:input message="tns:ImportContentSoapIn" />
+      <wsdl:output message="tns:ImportContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates/Updates a page according to seetings in registered channel</wsdl:documentation>
+      <wsdl:input name="ImportPage2" message="tns:ImportPage2SoapIn" />
+      <wsdl:output name="ImportPage2" message="tns:ImportPage2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates/Updates a content according to seetings in registered channel</wsdl:documentation>
+      <wsdl:input name="ImportContent2" message="tns:ImportContent2SoapIn" />
+      <wsdl:output name="ImportContent2" message="tns:ImportContent2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a page</wsdl:documentation>
+      <wsdl:input message="tns:DeletePageSoapIn" />
+      <wsdl:output message="tns:DeletePageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a content instance</wsdl:documentation>
+      <wsdl:input message="tns:DeleteContentSoapIn" />
+      <wsdl:output message="tns:DeleteContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePageLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a language version for a page</wsdl:documentation>
+      <wsdl:input message="tns:DeletePageLanguageSoapIn" />
+      <wsdl:output message="tns:DeletePageLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes a language version for a content instance</wsdl:documentation>
+      <wsdl:input message="tns:DeleteContentLanguageSoapIn" />
+      <wsdl:output message="tns:DeleteContentLanguageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ContentChannelServiceSoap" type="tns:ContentChannelServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateWebServiceAccess">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ValidateWebServiceAccess"
+                      style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile2" style="document" />
+      <wsdl:input name="ImportFile2">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile2">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile3" style="document" />
+      <wsdl:input name="ImportFile3">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile3">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile4" style="document" />
+      <wsdl:input name="ImportFile4">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile4">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFileMetadata">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFileMetadata" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxRequestLength">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/GetMaxRequestLength" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDataToFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/AppendDataToFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteFile2" style="document" />
+      <wsdl:input name="DeleteFile2">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="DeleteFile2">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDirectory">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteDirectory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportPage2" style="document" />
+      <wsdl:input name="ImportPage2">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportPage2">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportContent2" style="document" />
+      <wsdl:input name="ImportContent2">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportContent2">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePage">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeletePage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContent">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePageLanguage">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeletePageLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentLanguage">
+      <soap:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteContentLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ContentChannelServiceSoap12" type="tns:ContentChannelServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateWebServiceAccess">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ValidateWebServiceAccess"
+                        style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile2" style="document" />
+      <wsdl:input name="ImportFile2">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile2">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile3" style="document" />
+      <wsdl:input name="ImportFile3">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile3">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFile4" style="document" />
+      <wsdl:input name="ImportFile4">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportFile4">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportFileMetadata">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportFileMetadata" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxRequestLength">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/GetMaxRequestLength" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDataToFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/AppendDataToFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteFile2" style="document" />
+      <wsdl:input name="DeleteFile2">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="DeleteFile2">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDirectory">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteDirectory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportPage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportPage">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportPage2" style="document" />
+      <wsdl:input name="ImportPage2">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportPage2">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportContent">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/ImportContent2" style="document" />
+      <wsdl:input name="ImportContent2">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ImportContent2">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePage">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeletePage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContent">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePageLanguage">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeletePageLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentLanguage">
+      <soap12:operation soapAction="http://schemas.episerver.com/WebServices/v5/DeleteContentLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ContentChannelService">
+    <wsdl:port name="ContentChannelServiceSoap" binding="tns:ContentChannelServiceSoap">
+      <soap:address location="http://beaumontdemo.local/webservices/contentchannelservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ContentChannelServiceSoap12" binding="tns:ContentChannelServiceSoap12">
+      <soap12:address location="http://beaumontdemo.local/webservices/contentchannelservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
