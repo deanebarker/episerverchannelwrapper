@@ -45,6 +45,8 @@ namespace EPiServerChannelLib
         public string ChannelName { get; private set; }
         public string CultureName { get; set; }
         public string Url { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
         public Dictionary<string, Guid> KeyMap { get; set; }
         public List<string> ExistingKeys { get; set; }
@@ -143,14 +145,31 @@ namespace EPiServerChannelLib
             ContentChannelServiceSoapClient service;
             if (!String.IsNullOrWhiteSpace(Url))
             {
+                var binding = new BasicHttpBinding()
+                {
+                    Security = new BasicHttpSecurity()
+                    {
+                        Mode = BasicHttpSecurityMode.TransportCredentialOnly,
+                        Transport = new HttpTransportSecurity()
+                        {
+                            ClientCredentialType = HttpClientCredentialType.Basic
+                        }
+                    }
+                };
+                
                 // A URL was manually specified. Use it.
-                service = new ContentChannelServiceSoapClient(new BasicHttpBinding(), new EndpointAddress(Url));
+                service = new ContentChannelServiceSoapClient(binding, new EndpointAddress(Url));
+
+                service.ClientCredentials.UserName.UserName = Username;
+                service.ClientCredentials.UserName.Password = Password;
             }
             else
             {
                 // Use the URL out of the config file
                 service = new ContentChannelServiceSoapClient();
             }
+
+
             return service;
         }
 

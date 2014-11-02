@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using EPiServerChannelLib;
 
 namespace ImportFromCode
@@ -7,7 +8,9 @@ namespace ImportFromCode
     {
         private static void Main(string[] args)
         {
-            var channel = new EPiServerChannel("Deane", "http://beaumontdemo.local/webservices/contentchannelservice.asmx");
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/webservices/contentchannelservice.asmx");
+            channel.Username = "page.importer";
+            channel.Password = "page.importer";
 
             // Import from object
             var page = new Page
@@ -15,7 +18,7 @@ namespace ImportFromCode
                 MainBody = "This is the body",
                 TeaserText = "This is the teaser"
             };
-            channel.Process("Deane's Awesome Page", "1234", page);
+            channel.Process("Imported from Code", "imported-from-code", page);
 
             // Import from datarow
             var table = new DataTable();
