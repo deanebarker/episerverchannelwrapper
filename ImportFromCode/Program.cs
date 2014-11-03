@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using EPiServerChannelLib;
-using Microsoft.SqlServer.Server;
 
 namespace ImportFromCode
 {
@@ -27,24 +25,24 @@ namespace ImportFromCode
 
             // Import from datarow
             var table = new DataTable();
-            var pageName = new DataColumn()
+            var pageName = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "PageName"
             };
-            var externalId = new DataColumn()
+            var externalId = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "ExternalId"
             };
-            var mainBody = new DataColumn()
+            var mainBody = new DataColumn
             {
                 DataType = typeof (string),
                 ColumnName = "MainBody"
             };
-            var teaserText = new DataColumn()
+            var teaserText = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "TeaserText"
             };
             table.Columns.Add(pageName);
@@ -52,8 +50,8 @@ namespace ImportFromCode
             table.Columns.Add(teaserText);
             table.Columns.Add(externalId);
 
-            var row = table.NewRow();
-            row["PageName"] = "Import from Data Row";
+            DataRow row = table.NewRow();
+            row["PageName"] = "Imported from Data Row";
             row["ExternalId"] = "imported-from-data-row";
             row["MainBody"] = "This is the body";
             row["TeaserText"] = "This is the teaser text";
