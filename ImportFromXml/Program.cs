@@ -9,12 +9,15 @@ namespace ImportFromXml
     {
         private static void Main(string[] args)
         {
-            // Create the job
-            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/webservices/contentchannelservice.asmx");
-            channel.Username = "page.importer";
-            channel.Password = "page.importer";
-            channel.PageNameKey = "PageName";
-            channel.ExternalIdKey = "ExternalId";
+            // Open the channel
+            var channel = new EPiServerChannel("Press Releases")
+            {
+                SiteUrl = "http://sandbox2.local/",
+                Username = "page.importer",
+                Password = "page.importer",
+                PageNameKey = "PageName",
+                ExternalIdKey = "ExternalId"
+            };
 
             // Loop through the files
             foreach (FileInfo file in new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content")).GetFiles("*.xml"))

@@ -7,11 +7,15 @@ namespace ImportFromCode
     {
         private static void Main(string[] args)
         {
-            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/webservices/contentchannelservice.asmx");
-            channel.Username = "page.importer";
-            channel.Password = "page.importer";
-            channel.PageNameKey = "PageName";
-            channel.ExternalIdKey = "ExternalId";
+            // Open the channel
+            var channel = new EPiServerChannel("Press Releases")
+            {
+                SiteUrl = "http://sandbox2.local/",
+                Username = "page.importer",
+                Password = "page.importer",
+                PageNameKey = "PageName",
+                ExternalIdKey = "ExternalId"
+            };
 
             // Import from object
             var page = new Page

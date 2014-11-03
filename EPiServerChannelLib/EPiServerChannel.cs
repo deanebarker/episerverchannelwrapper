@@ -6,6 +6,7 @@ using System.Data.SqlServerCe;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.ServiceModel;
 using EPiServerChannelLib.ContentChannel;
 
@@ -18,7 +19,7 @@ namespace EPiServerChannelLib
         public EPiServerChannel(string channelName, string url = null, string cultureName = null)
         {
             ChannelName = channelName;
-            Url = url;
+            SiteUrl = url;
             CultureName = cultureName;
 
             KeyMap = new Dictionary<string, Guid>();
@@ -46,7 +47,7 @@ namespace EPiServerChannelLib
 
         public string ChannelName { get; private set; }
         public string CultureName { get; set; }
-        public string Url { get; set; }
+        public string SiteUrl { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
 
@@ -150,8 +151,12 @@ namespace EPiServerChannelLib
         public ContentChannelServiceSoapClient GetService()
         {
             ContentChannelServiceSoapClient service;
-            if (!String.IsNullOrWhiteSpace(Url))
+            if (!String.IsNullOrWhiteSpace(SiteUrl))
             {
+                // Append the path to the web service
+                // TODO: Should probably be abstracted to a constant
+                var serviceUrl = new Uri(new Uri(SiteUrl), "webservices/contentchannelservice.asmx").AbsoluteUri;
+                
                 var binding = new BasicHttpBinding
                 {
                     Security = new BasicHttpSecurity
@@ -165,7 +170,7 @@ namespace EPiServerChannelLib
                 };
 
                 // A URL was manually specified. Use it.
-                service = new ContentChannelServiceSoapClient(binding, new EndpointAddress(Url));
+                service = new ContentChannelServiceSoapClient(binding, new EndpointAddress(serviceUrl));
 
                 service.ClientCredentials.UserName.UserName = Username;
                 service.ClientCredentials.UserName.Password = Password;
