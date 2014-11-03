@@ -66,7 +66,7 @@ namespace EPiServerChannelLib
             // TODO: There's no-doubt a much more elegant way of doing this.
             if (obj is IDictionary<string, object>)
             {
-                dictionary = (Dictionary<string, object>) obj;
+                dictionary = obj as Dictionary<string, object>;
             }
             else if (obj is DataRow)
             {
