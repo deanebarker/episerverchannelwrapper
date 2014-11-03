@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
 using System.ServiceModel;
+using System.Xml;
 using EPiServerChannelLib.ContentChannel;
 
 namespace EPiServerChannelLib
@@ -81,6 +82,10 @@ namespace EPiServerChannelLib
             {
                 // I hate that there's a different type for SqlCe...seems silly.
                 dictionary = SqlCeDataReaderToDictionary(obj as SqlCeDataReader);
+            }
+            else if (obj is XmlElement)
+            {
+                dictionary = XmlElementToDictionary(obj as XmlElement);
             }
             else
             {
@@ -224,6 +229,18 @@ namespace EPiServerChannelLib
             {
                 dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
             }
+            return dictionary;
+        }
+
+        // XmlElement
+        private Dictionary<string, object> XmlElementToDictionary(XmlElement element)
+        {
+            var dictionary = new Dictionary<string, object>();
+            foreach (XmlElement child in element.ChildNodes)
+            {
+                dictionary.Add(child.Name, child.InnerText);
+            }
+
             return dictionary;
         }
 
