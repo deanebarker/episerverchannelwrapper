@@ -13,6 +13,18 @@ namespace EPiServerChannelLib
     {
         private readonly string fileLocation;
 
+        public string ChannelName { get; private set; }
+        public string CultureName { get; set; }
+        public string Url { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+
+        public string PageNameKey { get; set; }
+        public string ExternalIdKey { get; set; }
+
+        public Dictionary<string, Guid> KeyMap { get; set; }
+        public List<string> ExistingKeys { get; set; }
+
         public EPiServerChannel(string channelName, string url = null, string cultureName = null)
         {
             ChannelName = channelName;
@@ -42,16 +54,9 @@ namespace EPiServerChannelLib
             }
         }
 
-        public string ChannelName { get; private set; }
-        public string CultureName { get; set; }
-        public string Url { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
 
-        public Dictionary<string, Guid> KeyMap { get; set; }
-        public List<string> ExistingKeys { get; set; }
 
-        public void Process(string pageName, string externalKey, object obj)
+        public void Process(object obj)
         {
             var propertyKeys = new ArrayOfString();
             var propertyValues = new ArrayOfString();
@@ -70,6 +75,9 @@ namespace EPiServerChannelLib
                     obj = ReflectToDictionary(obj);
                 }        
             }
+
+            var pageName = (string)((IDictionary<string,object>) obj)[PageNameKey];
+            var externalKey = (string)((IDictionary<string, object>)obj)[ExternalIdKey];
 
             foreach (var entry in (Dictionary<string, Object>)obj)
             {
