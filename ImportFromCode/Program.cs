@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using EPiServerChannelLib;
 
 namespace ImportFromCode
@@ -17,36 +18,58 @@ namespace ImportFromCode
                 ExternalIdKey = "ExternalId"
             };
 
-            // Import from object
-            var page = new Page
+            // Import from POCO object
+            var poco = new Page
             {
-                PageName = "Imported from Code",
-                ExternalId = "imported-from-code",
+                PageName = "Imported from Code via POCO",
+                ExternalId = "imported-from-code-via-poco",
                 MainBody = "This is the body",
                 TeaserText = "This is the teaser"
             };
-            channel.Process(page);
+            channel.Process(poco);
 
-            // Import from datarow
+            // Import from Dictionary
+            var dictionary = new Dictionary<string, object>();
+            dictionary.Add("PageName", "Imported from Code via Dictionary");
+            dictionary.Add("ExternalId", "imported-from-code-via-dictionary");
+            dictionary.Add("MainBody", "This is the body.");
+            dictionary.Add("TeaserText", "This is the teaser");
+            channel.Process(dictionary);
+
+            // Import from DataRow (the idea here is that you'd have an entire DataTable, then iterate the rows....)
+            var dataRow = GetTable().NewRow();
+            dataRow["PageName"] = "Imported from Data Row";
+            dataRow["ExternalId"] = "imported-from-data-row";
+            dataRow["MainBody"] = "This is the body";
+            dataRow["TeaserText"] = "This is the teaser text";
+            channel.Process(dataRow);
+
+            channel.Close();
+        }
+
+        private static DataTable GetTable()
+        {
+            // Just moving this out the code above for simplicity's sake
+
             var table = new DataTable();
             var pageName = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "PageName"
             };
             var externalId = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "ExternalId"
             };
             var mainBody = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "MainBody"
             };
             var teaserText = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "TeaserText"
             };
             table.Columns.Add(pageName);
@@ -54,15 +77,7 @@ namespace ImportFromCode
             table.Columns.Add(teaserText);
             table.Columns.Add(externalId);
 
-            DataRow row = table.NewRow();
-            row["PageName"] = "Imported from Data Row";
-            row["ExternalId"] = "imported-from-data-row";
-            row["MainBody"] = "This is the body";
-            row["TeaserText"] = "This is the teaser text";
-
-            channel.Process(row);
-
-            channel.Close();
+            return table;
         }
     }
 
