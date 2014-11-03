@@ -28,6 +28,16 @@ namespace ImportFromCode
             };
             channel.Process(poco);
 
+            // Import from Anonymous object
+            var anon = new 
+            {
+                PageName = "Imported from Code via Anonymous Type",
+                ExternalId = "imported-from-code-via-anon",
+                MainBody = "This is the body",
+                TeaserText = "This is the teaser"
+            };
+            channel.Process(anon);
+
             // Import from Dictionary
             var dictionary = new Dictionary<string, object>();
             dictionary.Add("PageName", "Imported from Code via Dictionary");
