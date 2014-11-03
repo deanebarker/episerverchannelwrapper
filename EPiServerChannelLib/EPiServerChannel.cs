@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using EPiServerChannelLib.ContentChannel;
 using System;
 using System.Collections.Generic;
@@ -55,7 +57,6 @@ namespace EPiServerChannelLib
         }
 
 
-
         public void Process(object obj)
         {
             var propertyKeys = new ArrayOfString();
@@ -67,17 +68,24 @@ namespace EPiServerChannelLib
                 // DataRow has a specific extension method for this
                 if (obj is DataRow)
                 {
-                    var row = ((DataRow) obj);
-                    obj = row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
+                    obj = DataRowToDictionary(obj as DataRow);
+                }
+                else if (obj is SqlDataReader)
+                {
+                    obj = SqlDataReaderToDictionary(obj as SqlDataReader);
+                }
+                else if (obj is SqlCeDataReader)
+                {
+                    obj = SqlCeDataReaderToDictionary(obj as SqlCeDataReader);
                 }
                 else
                 {
-                    obj = ReflectToDictionary(obj);
+                    obj = ObjectToDictionary(obj);
                 }        
             }
 
-            var pageName = (string)((IDictionary<string,object>) obj)[PageNameKey];
-            var externalKey = (string)((IDictionary<string, object>)obj)[ExternalIdKey];
+            var pageName = Convert.ToString(((IDictionary<string,object>) obj)[PageNameKey]);
+            var externalKey = Convert.ToString(((IDictionary<string, object>)obj)[ExternalIdKey]);
 
             foreach (var entry in (Dictionary<string, Object>)obj)
             {
@@ -105,7 +113,32 @@ namespace EPiServerChannelLib
             KeyMap.Add(externalKey, episerverId);
         }
 
-        private Dictionary<string, object> ReflectToDictionary(object obj)
+        private Dictionary<string, object> SqlCeDataReaderToDictionary(SqlCeDataReader reader)
+        {
+            var dictionary = new Dictionary<string, object>();
+            for (int lp = 0; lp < reader.FieldCount; lp++)
+            {
+                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
+            }
+            return dictionary;
+        }
+
+        private Dictionary<string, object> DataRowToDictionary(DataRow row)
+        {
+            return row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
+        }
+
+        private Dictionary<string, object> SqlDataReaderToDictionary(SqlDataReader reader)
+        {
+            var dictionary = new Dictionary<string, object>();
+            for (int lp = 0; lp < reader.FieldCount; lp++)
+            {
+                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
+            }
+            return dictionary;
+        }
+
+        private Dictionary<string, object> ObjectToDictionary(object obj)
         {
             var dictionary = new Dictionary<string, object>();
 
