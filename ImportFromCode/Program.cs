@@ -13,9 +13,7 @@ namespace ImportFromCode
             {
                 SiteUrl = "http://sandbox2.local/",
                 Username = "page.importer",
-                Password = "page.importer",
-                PageNameKey = "PageName",
-                ExternalIdKey = "ExternalId"
+                Password = "page.importer"
             };
 
             // Import from POCO object

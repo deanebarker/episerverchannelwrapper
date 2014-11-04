@@ -14,9 +14,7 @@ namespace ImportFromXml
             {
                 SiteUrl = "http://sandbox2.local/",
                 Username = "page.importer",
-                Password = "page.importer",
-                PageNameKey = "PageName",
-                ExternalIdKey = "ExternalId"
+                Password = "page.importer"
             };
 
             foreach (FileInfo file in new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content")).GetFiles("*.xml"))
@@ -30,7 +28,7 @@ namespace ImportFromXml
                 externalIdElement.InnerText = file.Name;
                 doc.DocumentElement.AppendChild(externalIdElement);
                 
-                channel.Process(doc.DocumentElement);
+                channel.Process(doc);
             }
 
             channel.Close();
