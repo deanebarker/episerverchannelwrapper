@@ -16,6 +16,7 @@ namespace EPiServerChannelLib
     public class EPiServerChannel
     {
         private readonly string fileLocation;
+        
 
         public EPiServerChannel(string channelName, string url = null, string cultureName = null)
         {
@@ -30,24 +31,7 @@ namespace EPiServerChannelLib
             KeyMap = new Dictionary<string, Guid>();
             ExistingKeys = new List<string>();
 
-            // TODO: This needs to be extracted into a provider-type model
-            fileLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key-map.txt");
-            if (File.Exists(fileLocation))
-            {
-                string text = File.ReadAllText(fileLocation);
-                foreach (string line in text.Split(Environment.NewLine.ToCharArray()))
-                {
-                    if (!line.Contains(":"))
-                    {
-                        continue;
-                    }
-
-                    KeyMap.Add(
-                        line.Split(':')[0],
-                        Guid.Parse(line.Split(':')[1])
-                        );
-                }
-            }
+            RecordManager = new FileSystemRecordManager();
         }
 
         public string ChannelName { get; private set; }
@@ -55,6 +39,7 @@ namespace EPiServerChannelLib
         public string SiteUrl { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public IRecordManager RecordManager { get; set; }
 
         // TODO: Need intelligent defaults for these two
         public string PageNameKey { get; set; }
@@ -130,6 +115,8 @@ namespace EPiServerChannelLib
         public void Process(Dictionary<string, object> dictionary)
         {
 
+            RecordManager.Init();
+
             var propertyKeys = new ArrayOfString();
             var propertyValues = new ArrayOfString();
 
@@ -144,11 +131,7 @@ namespace EPiServerChannelLib
             }
 
             // If this external key is in the KeyMap, then ensure it has an EPiServer GUID set
-            Guid episerverKey = Guid.Empty;
-            if (KeyMap.ContainsKey(externalKey))
-            {
-                episerverKey = KeyMap[externalKey];
-            }
+            var episerverKey = RecordManager.GetEPiServerGuid(externalKey);
 
             // Add this to the list of keys that we know exist
             ExistingKeys.Add(externalKey);
@@ -160,8 +143,7 @@ namespace EPiServerChannelLib
             Guid episerverId = service.ImportPage1(ChannelName, pageName, propertyKeys, propertyValues, CultureName, episerverKey, Guid.Empty, null);
 
             // Ensure this is valid inside the keymap
-            KeyMap.Remove(externalKey);
-            KeyMap.Add(externalKey, episerverId);
+            RecordManager.AddEPiServerGuid(externalKey, episerverId);
         }
 
         public int ProcessDeletions()
@@ -228,12 +210,7 @@ namespace EPiServerChannelLib
         // TODO: Could this be moved into Dispose()?  It needs to be called at the end of every usage of the object, because it rewrites the KeyMap
         public void Close()
         {
-            File.WriteAllText(fileLocation, String.Empty);
-
-            foreach (var entry in KeyMap)
-            {
-                File.AppendAllText(fileLocation, String.Concat(entry.Key, ":", entry.Value, Environment.NewLine));
-            }
+            RecordManager.Close();
         }
 
     }
