@@ -8,6 +8,7 @@ using System.Reflection;
 using System.ServiceModel;
 using System.Xml;
 using EPiServerChannelLib.ContentChannel;
+using EPiServerChannelLib.RecordManagers;
 
 namespace EPiServerChannelLib
 {

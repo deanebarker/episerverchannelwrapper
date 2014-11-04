@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace EPiServerChannelLib
+namespace EPiServerChannelLib.RecordManagers
 {
     public class FileSystemRecordManager : IRecordManager
     {

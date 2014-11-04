@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlServerCe;
 using EPiServerChannelLib;
+using ImportFromDatabase.RecordManagers;
 
 namespace ImportFromDatabase
 {

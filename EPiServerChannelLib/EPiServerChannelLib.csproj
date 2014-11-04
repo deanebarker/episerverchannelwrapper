@@ -42,16 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystemRecordManager.cs" />
+    <Compile Include="RecordManagers\FileSystemRecordManager.cs" />
     <Compile Include="IgnoreAttribute.cs" />
     <Compile Include="EPiServerChannel.cs" />
-    <Compile Include="IRecordManager.cs" />
+    <Compile Include="RecordManagers\IRecordManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ContentChannel\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="RecordManagers\SqlCeRecordManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data.SqlServerCe;
-using EPiServerChannelLib;
+using EPiServerChannelLib.RecordManagers;
 
-namespace ImportFromDatabase
+namespace ImportFromDatabase.RecordManagers
 {
     public class SqlCeRecordManager : IRecordManager
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiServerChannelLib
+namespace EPiServerChannelLib.RecordManagers
 {
     public interface IRecordManager
     {
