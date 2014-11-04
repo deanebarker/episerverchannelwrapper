@@ -64,40 +64,71 @@ namespace EPiServerChannelLib
         public List<string> ExistingKeys { get; set; }
 
 
-        public void Process(object obj)
+        public void Process(DataRow row)
         {
-            Dictionary<string, object> dictionary;
+            var dictionary = row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
+            Process(dictionary);
+        }
 
-            // We need to turn the incoming object into a Dictionary. How we do this depends on what it is.
-            // TODO: There's no-doubt a much more elegant way of doing this.
-            if (obj is IDictionary<string, object>)
+        public void Process(SqlCeDataReader reader)
+        {
+            var dictionary = new Dictionary<string, object>();
+            for (int lp = 0; lp < reader.FieldCount; lp++)
             {
-                dictionary = obj as Dictionary<string, object>;
+                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
             }
-            else if (obj is DataRow)
+            Process(dictionary);
+        }
+
+        public void Process(SqlDataReader reader)
+        {
+            var dictionary = new Dictionary<string, object>();
+            for (int lp = 0; lp < reader.FieldCount; lp++)
             {
-                dictionary = DataRowToDictionary(obj as DataRow);
+                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
             }
-            else if (obj is SqlDataReader)
+            Process(dictionary);
+        }
+
+        public void Process(XmlDocument doc)
+        {
+            // Call the overload for XmlElement for the root element
+            Process(doc.DocumentElement);
+        }
+
+        public void Process(XmlElement element)
+        {
+            var dictionary = new Dictionary<string, object>();
+            foreach (XmlElement child in element.ChildNodes)
             {
-                dictionary = SqlDataReaderToDictionary(obj as SqlDataReader);
-            }
-            else if (obj is SqlCeDataReader)
-            {
-                // I hate that there's a different type for SqlCe...seems silly.
-                dictionary = SqlCeDataReaderToDictionary(obj as SqlCeDataReader);
-            }
-            else if (obj is XmlElement)
-            {
-                dictionary = XmlElementToDictionary(obj as XmlElement);
-            }
-            else
-            {
-                // This is our catch-all. If this is a POCO object that doesn't fit any of the above types, then we're just going to reflect its properties into a dictionary
-                dictionary = ObjectToDictionary(obj);
+                dictionary.Add(child.Name, child.InnerText);
             }
 
-            // At this point, no matter what was passed in, we have a Dictionary object. This is what we set properties from.
+            Process(dictionary);
+        }
+
+       public void Process(object obj)
+        {
+            var dictionary = new Dictionary<string, object>();
+
+            // Reflect all the properties on the object and set them to properties of the same name and value
+            foreach (PropertyInfo propertyDef in obj.GetType().GetProperties())
+            {
+                // If this property has an "Ignore" attribute, then skip it
+                if (propertyDef.GetCustomAttributes(typeof(IgnoreAttribute), false).Any())
+                {
+                    continue;
+                }
+
+                dictionary.Add(propertyDef.Name, obj.GetType().GetProperty(propertyDef.Name).GetValue(obj));
+            }
+
+            Process(dictionary);
+        }
+
+        // This is the core Process method. All other overloaded calls to Process(whatever) simply turn their input into a Dictionary and then call this method.
+        public void Process(Dictionary<string, object> dictionary)
+        {
 
             var propertyKeys = new ArrayOfString();
             var propertyValues = new ArrayOfString();
@@ -205,67 +236,5 @@ namespace EPiServerChannelLib
             }
         }
 
-
-        // Below are our "[Type]ToDictionary" methods. Again, there's a better way of doing this, I'm quite sure...
-
-        // SqlCeDataReader
-        private Dictionary<string, object> SqlCeDataReaderToDictionary(SqlCeDataReader reader)
-        {
-            var dictionary = new Dictionary<string, object>();
-            for (int lp = 0; lp < reader.FieldCount; lp++)
-            {
-                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
-            }
-            return dictionary;
-        }
-
-        // DataRow
-        private Dictionary<string, object> DataRowToDictionary(DataRow row)
-        {
-            return row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
-        }
-
-        // SqlDataReader
-        private Dictionary<string, object> SqlDataReaderToDictionary(SqlDataReader reader)
-        {
-            var dictionary = new Dictionary<string, object>();
-            for (int lp = 0; lp < reader.FieldCount; lp++)
-            {
-                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
-            }
-            return dictionary;
-        }
-
-        // XmlElement
-        private Dictionary<string, object> XmlElementToDictionary(XmlElement element)
-        {
-            var dictionary = new Dictionary<string, object>();
-            foreach (XmlElement child in element.ChildNodes)
-            {
-                dictionary.Add(child.Name, child.InnerText);
-            }
-
-            return dictionary;
-        }
-
-        // POCO object (our catch-all)
-        private Dictionary<string, object> ObjectToDictionary(object obj)
-        {
-            var dictionary = new Dictionary<string, object>();
-
-            // Reflect all the properties on the object and set them to properties of the same name and value
-            foreach (PropertyInfo propertyDef in obj.GetType().GetProperties())
-            {
-                // If this property has an "Ignore" attribute, then skip it
-                if (propertyDef.GetCustomAttributes(typeof (IgnoreAttribute), false).Any())
-                {
-                    continue;
-                }
-
-                dictionary.Add(propertyDef.Name, obj.GetType().GetProperty(propertyDef.Name).GetValue(obj));
-            }
-
-            return dictionary;
-        }
     }
 }
