@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPiServerChannelLib
 {
     public class FileSystemRecordManager : IRecordManager
     {
-        private Dictionary<string, Guid> keyMap;
-        private string path;
+        private readonly Dictionary<string, Guid> keyMap;
+        private readonly string path;
         private Boolean initialized;
 
         public FileSystemRecordManager()
         {
             path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key-map.txt");
             keyMap = new Dictionary<string, Guid>();
-
-
         }
 
         public void Init()
@@ -75,6 +70,5 @@ namespace EPiServerChannelLib
                 File.AppendAllText(path, String.Concat(entry.Key, ":", entry.Value, Environment.NewLine));
             }
         }
-
     }
 }

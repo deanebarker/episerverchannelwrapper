@@ -24,10 +24,10 @@ namespace ImportFromXml
                 doc.Load(file.FullName);
 
                 // Inject the filename (which we're using as a key) into a temporary element, so it can be found by the channel (alternately, you could manually put it there, but then you're trusting the editors...)
-                var externalIdElement = doc.CreateElement("ExternalId");
+                XmlElement externalIdElement = doc.CreateElement("ExternalId");
                 externalIdElement.InnerText = file.Name;
                 doc.DocumentElement.AppendChild(externalIdElement);
-                
+
                 channel.Process(doc);
             }
 

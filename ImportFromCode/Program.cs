@@ -27,7 +27,7 @@ namespace ImportFromCode
             channel.Process(poco);
 
             // Import from Anonymous object
-            var anon = new 
+            var anon = new
             {
                 PageName = "Imported from Code via Anonymous Type",
                 ExternalId = "imported-from-code-via-anon",
@@ -45,7 +45,7 @@ namespace ImportFromCode
             channel.Process(dictionary);
 
             // Import from DataRow (the idea here is that you'd have an entire DataTable, then iterate the rows....)
-            var dataRow = GetTable().NewRow();
+            DataRow dataRow = GetTable().NewRow();
             dataRow["PageName"] = "Imported from Data Row";
             dataRow["ExternalId"] = "imported-from-data-row";
             dataRow["MainBody"] = "This is the body";
@@ -62,22 +62,22 @@ namespace ImportFromCode
             var table = new DataTable();
             var pageName = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "PageName"
             };
             var externalId = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "ExternalId"
             };
             var mainBody = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "MainBody"
             };
             var teaserText = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "TeaserText"
             };
             table.Columns.Add(pageName);

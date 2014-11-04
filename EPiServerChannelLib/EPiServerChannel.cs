@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Policy;
 using System.ServiceModel;
 using System.Xml;
 using EPiServerChannelLib.ContentChannel;
@@ -16,7 +14,7 @@ namespace EPiServerChannelLib
     public class EPiServerChannel
     {
         private readonly string fileLocation;
-        
+
 
         public EPiServerChannel(string channelName, string url = null, string cultureName = null)
         {
@@ -51,7 +49,7 @@ namespace EPiServerChannelLib
 
         public void Process(DataRow row)
         {
-            var dictionary = row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
+            Dictionary<string, object> dictionary = row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
             Process(dictionary);
         }
 
@@ -92,7 +90,7 @@ namespace EPiServerChannelLib
             Process(dictionary);
         }
 
-       public void Process(object obj)
+        public void Process(object obj)
         {
             var dictionary = new Dictionary<string, object>();
 
@@ -100,7 +98,7 @@ namespace EPiServerChannelLib
             foreach (PropertyInfo propertyDef in obj.GetType().GetProperties())
             {
                 // If this property has an "Ignore" attribute, then skip it
-                if (propertyDef.GetCustomAttributes(typeof(IgnoreAttribute), false).Any())
+                if (propertyDef.GetCustomAttributes(typeof (IgnoreAttribute), false).Any())
                 {
                     continue;
                 }
@@ -114,7 +112,6 @@ namespace EPiServerChannelLib
         // This is the core Process method. All other overloaded calls to Process(whatever) simply turn their input into a Dictionary and then call this method.
         public void Process(Dictionary<string, object> dictionary)
         {
-
             RecordManager.Init();
 
             var propertyKeys = new ArrayOfString();
@@ -131,7 +128,7 @@ namespace EPiServerChannelLib
             }
 
             // If this external key is in the KeyMap, then ensure it has an EPiServer GUID set
-            var episerverKey = RecordManager.GetEPiServerGuid(externalKey);
+            Guid episerverKey = RecordManager.GetEPiServerGuid(externalKey);
 
             // Add this to the list of keys that we know exist
             ExistingKeys.Add(externalKey);
@@ -177,8 +174,8 @@ namespace EPiServerChannelLib
             {
                 // Append the path to the web service
                 // TODO: Should probably be abstracted to a constant
-                var serviceUrl = new Uri(new Uri(SiteUrl), "webservices/contentchannelservice.asmx").AbsoluteUri;
-                
+                string serviceUrl = new Uri(new Uri(SiteUrl), "webservices/contentchannelservice.asmx").AbsoluteUri;
+
                 var binding = new BasicHttpBinding
                 {
                     Security = new BasicHttpSecurity
@@ -212,6 +209,5 @@ namespace EPiServerChannelLib
         {
             RecordManager.Close();
         }
-
     }
 }
