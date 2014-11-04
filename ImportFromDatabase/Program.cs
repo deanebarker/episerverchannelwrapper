@@ -7,20 +7,26 @@ namespace ImportFromDatabase
     {
         private static void Main(string[] args)
         {
-            // Get the articles
-            var command = new SqlCeCommand();
-            command.Connection = new SqlCeConnection("Data Source=Data.sdf;Persist Security Info=False;");
-            command.Connection.Open();
-            command.CommandText = "SELECT ID as ExternalId, Title as PageName, Excerpt as TeaserText, Text AS MainBody FROM Articles";
-            SqlCeDataReader reader = command.ExecuteReader();
+            // Note: you're going to need to change this path...
+            // If you're debugging, this needs to be somewhere stable, and not just in the bin/debug directory, because it will get overwritten there, which defeats the purpose of having it...
+            string rmDatabaseLocation = @"C:\Data\Code\EPiServerChannelWrapper\ImportFromDatabase\RecordManager.sdf";
 
+            // Get the articles
+            var command = new SqlCeCommand
+            {
+                Connection = new SqlCeConnection("Data Source=Data.sdf;Persist Security Info=False;"),
+                CommandText = "SELECT ID as ExternalId, Title as PageName, Excerpt as TeaserText, Text AS MainBody FROM Articles",
+            };
+            command.Connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
 
             // Open the channel
             var channel = new EPiServerChannel("Press Releases")
             {
                 SiteUrl = "http://sandbox2.local/",
                 Username = "page.importer",
-                Password = "page.importer"
+                Password = "page.importer",
+                RecordManager = new SqlCeRecordManager(rmDatabaseLocation)
             };
 
             while (reader.Read())
