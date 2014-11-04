@@ -19,6 +19,10 @@ namespace EPiServerChannelLib
 
         public EPiServerChannel(string channelName, string url = null, string cultureName = null)
         {
+            // These are the defaults
+            PageNameKey = "PageName";
+            ExternalIdKey = "ExternalId";
+
             ChannelName = channelName;
             SiteUrl = url;
             CultureName = cultureName;
