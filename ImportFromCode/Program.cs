@@ -9,7 +9,7 @@ namespace ImportFromCode
         private static void Main(string[] args)
         {
             // Open the channel
-            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", string.Empty, "page.importer", "page.importer");
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", "page.importer", "page.importer");
 
             // Import from POCO object
             var poco = new Page

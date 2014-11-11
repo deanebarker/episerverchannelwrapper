@@ -22,7 +22,7 @@ namespace ImportFromDatabase
             SqlCeDataReader reader = command.ExecuteReader();
 
             // Open the channel
-            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", string.Empty, "page.importer", "page.importer")
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", "page.importer", "page.importer")
             {
                 RecordManager = new SqlCeRecordManager(rmDatabaseLocation)
             };
