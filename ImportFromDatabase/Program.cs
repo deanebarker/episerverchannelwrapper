@@ -1,6 +1,6 @@
-﻿using EPiServerChannelLib;
+﻿using System.Data.SqlServerCe;
+using EPiServerChannelLib;
 using ImportFromDatabase.RecordManagers;
-using System.Data.SqlServerCe;
 
 namespace ImportFromDatabase
 {

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportFromXml", "ImportFrom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportFromDatabase", "ImportFromDatabase\ImportFromDatabase.csproj", "{8B35EC24-B0D3-4C5E-BE23-F5910619A6D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportFromEPiServer", "ExportFromEPiServer\ExportFromEPiServer.csproj", "{A7367FFD-5C75-4017-92D7-F1E77D7BFED5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{8B35EC24-B0D3-4C5E-BE23-F5910619A6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B35EC24-B0D3-4C5E-BE23-F5910619A6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B35EC24-B0D3-4C5E-BE23-F5910619A6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7367FFD-5C75-4017-92D7-F1E77D7BFED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7367FFD-5C75-4017-92D7-F1E77D7BFED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7367FFD-5C75-4017-92D7-F1E77D7BFED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7367FFD-5C75-4017-92D7-F1E77D7BFED5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

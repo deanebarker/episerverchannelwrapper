@@ -1,7 +1,7 @@
-﻿using EPiServerChannelLib;
-using System;
+﻿using System;
 using System.IO;
 using System.Xml;
+using EPiServerChannelLib;
 
 namespace ImportFromXml
 {

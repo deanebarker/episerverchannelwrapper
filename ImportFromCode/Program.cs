@@ -1,6 +1,6 @@
-﻿using EPiServerChannelLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using EPiServerChannelLib;
 
 namespace ImportFromCode
 {
@@ -57,22 +57,22 @@ namespace ImportFromCode
             var table = new DataTable();
             var pageName = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "PageName"
             };
             var externalId = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "ExternalId"
             };
             var mainBody = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "MainBody"
             };
             var teaserText = new DataColumn
             {
-                DataType = typeof(string),
+                DataType = typeof (string),
                 ColumnName = "TeaserText"
             };
             table.Columns.Add(pageName);
