@@ -9,6 +9,7 @@ using EPiServerChannelLib.RecordManagers;
 
 namespace ExportFromEPiServer
 {
+    // This is a scheduled job designed to push all pages under a designated parent page into another EPiServer installation.
     [ScheduledPlugIn(DisplayName = "Export to Content Channel")]
     public class ExportFromEPiServer : JobBase
     {

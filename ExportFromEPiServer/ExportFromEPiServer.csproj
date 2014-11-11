@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImportFromEPiServer.cs" />
+    <Compile Include="ExportFromEPiServer.cs" />
     <Compile Include="RecordManagers\DDSRecordManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
