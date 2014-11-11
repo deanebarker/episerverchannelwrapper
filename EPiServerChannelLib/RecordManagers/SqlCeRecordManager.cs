@@ -1,6 +1,6 @@
-﻿using System;
+﻿using EPiServerChannelLib.RecordManagers;
+using System;
 using System.Data.SqlServerCe;
-using EPiServerChannelLib.RecordManagers;
 
 namespace ImportFromDatabase.RecordManagers
 {
@@ -35,7 +35,7 @@ namespace ImportFromDatabase.RecordManagers
                 return Guid.Empty;
             }
 
-            return Guid.Parse((string) value);
+            return Guid.Parse((string)value);
         }
 
         public void AddEPiServerGuid(string key, Guid pageGuid)

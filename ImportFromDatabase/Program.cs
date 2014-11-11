@@ -1,6 +1,6 @@
-﻿using System.Data.SqlServerCe;
-using EPiServerChannelLib;
+﻿using EPiServerChannelLib;
 using ImportFromDatabase.RecordManagers;
+using System.Data.SqlServerCe;
 
 namespace ImportFromDatabase
 {
@@ -22,11 +22,8 @@ namespace ImportFromDatabase
             SqlCeDataReader reader = command.ExecuteReader();
 
             // Open the channel
-            var channel = new EPiServerChannel("Press Releases")
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", string.Empty, "page.importer", "page.importer")
             {
-                SiteUrl = "http://sandbox2.local/",
-                Username = "page.importer",
-                Password = "page.importer",
                 RecordManager = new SqlCeRecordManager(rmDatabaseLocation)
             };
 

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using EPiServerChannelLib;
+using System.Collections.Generic;
 using System.Data;
-using EPiServerChannelLib;
 
 namespace ImportFromCode
 {
@@ -9,12 +9,7 @@ namespace ImportFromCode
         private static void Main(string[] args)
         {
             // Open the channel
-            var channel = new EPiServerChannel("Press Releases")
-            {
-                SiteUrl = "http://sandbox2.local/",
-                Username = "page.importer",
-                Password = "page.importer"
-            };
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", string.Empty, "page.importer", "page.importer");
 
             // Import from POCO object
             var poco = new Page
@@ -62,22 +57,22 @@ namespace ImportFromCode
             var table = new DataTable();
             var pageName = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "PageName"
             };
             var externalId = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "ExternalId"
             };
             var mainBody = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "MainBody"
             };
             var teaserText = new DataColumn
             {
-                DataType = typeof (string),
+                DataType = typeof(string),
                 ColumnName = "TeaserText"
             };
             table.Columns.Add(pageName);
@@ -95,8 +90,11 @@ namespace ImportFromCode
         public string SomePropertyThatShouldNotBeMappedAndWillNeverBeSet { get; set; }
 
         public string PageName { get; set; }
+
         public string ExternalId { get; set; }
+
         public string TeaserText { get; set; }
+
         public string MainBody { get; set; }
     }
 }

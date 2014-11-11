@@ -1,7 +1,7 @@
-﻿using System;
+﻿using EPiServerChannelLib;
+using System;
 using System.IO;
 using System.Xml;
-using EPiServerChannelLib;
 
 namespace ImportFromXml
 {
@@ -10,12 +10,7 @@ namespace ImportFromXml
         private static void Main(string[] args)
         {
             // Open the channel
-            var channel = new EPiServerChannel("Press Releases")
-            {
-                SiteUrl = "http://sandbox2.local/",
-                Username = "page.importer",
-                Password = "page.importer"
-            };
+            var channel = new EPiServerChannel("Press Releases", "http://sandbox2.local/", string.Empty, "page.importer", "page.importer");
 
             foreach (FileInfo file in new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content")).GetFiles("*.xml"))
             {

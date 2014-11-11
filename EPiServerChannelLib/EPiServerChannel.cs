@@ -1,83 +1,90 @@
-﻿using System;
+﻿using EPiServerChannelLib.ContentChannel;
+using EPiServerChannelLib.RecordManagers;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
 using System.Xml;
-using EPiServerChannelLib.ContentChannel;
-using EPiServerChannelLib.RecordManagers;
 
 namespace EPiServerChannelLib
 {
     public class EPiServerChannel
     {
-        private readonly string fileLocation;
-
-
-        public EPiServerChannel(string channelName, string url = null, string cultureName = null)
-        {
-            // These are the defaults
-            PageNameKey = "PageName";
-            ExternalIdKey = "ExternalId";
-
-            ChannelName = channelName;
-            SiteUrl = url;
-            CultureName = cultureName;
-
-            KeyMap = new Dictionary<string, Guid>();
-            ExistingKeys = new List<string>();
-
-            RecordManager = new FileSystemRecordManager();
-        }
+        //private readonly string fileLocation;
 
         public string ChannelName { get; private set; }
+
         public string CultureName { get; set; }
+
         public string SiteUrl { get; set; }
+
         public string Username { get; set; }
+
         public string Password { get; set; }
+
         public IRecordManager RecordManager { get; set; }
 
         // TODO: Need intelligent defaults for these two
         public string PageNameKey { get; set; }
+
         public string ExternalIdKey { get; set; }
 
         public Dictionary<string, Guid> KeyMap { get; set; }
+
         public List<string> ExistingKeys { get; set; }
 
+        public EPiServerChannel(string channelName, string url, string cultureName)
+        {
+            // These are the defaults
+            this.PageNameKey = "PageName";
+            this.ExternalIdKey = "ExternalId";
+
+            this.ChannelName = channelName;
+            this.SiteUrl = url;
+            this.CultureName = cultureName;
+
+            this.KeyMap = new Dictionary<string, Guid>();
+            this.ExistingKeys = new List<string>();
+
+            this.RecordManager = new FileSystemRecordManager();
+        }
+
+        public EPiServerChannel(string channelName, string url = null, string cultureName = null, string username = null, string password = null)
+            : this(channelName, url, cultureName)
+        {
+            this.Username = username;
+            this.Password = password;
+        }
 
         public void Process(DataRow row)
         {
-            Dictionary<string, object> dictionary = row.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
-            Process(dictionary);
+            Dictionary<string, object> dictionary = row.Table.Columns
+                .Cast<DataColumn>()
+                .ToDictionary(col => col.ColumnName, col => row.Field<object>(col.ColumnName));
+
+            this.Process(dictionary);
         }
 
-        public void Process(SqlCeDataReader reader)
+        // Removed SQLCE & SQL since they both inherit DBDataReader.  should make it alot simpler
+        public void Process(DbDataReader reader)
         {
             var dictionary = new Dictionary<string, object>();
             for (int lp = 0; lp < reader.FieldCount; lp++)
             {
                 dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
             }
-            Process(dictionary);
-        }
-
-        public void Process(SqlDataReader reader)
-        {
-            var dictionary = new Dictionary<string, object>();
-            for (int lp = 0; lp < reader.FieldCount; lp++)
-            {
-                dictionary.Add(reader.GetName(lp), reader.GetValue(lp));
-            }
-            Process(dictionary);
+            this.Process(dictionary);
         }
 
         public void Process(XmlDocument doc)
         {
             // Call the overload for XmlElement for the root element
-            Process(doc.DocumentElement);
+            this.Process(doc.DocumentElement);
         }
 
         public void Process(XmlElement element)
@@ -88,7 +95,7 @@ namespace EPiServerChannelLib
                 dictionary.Add(child.Name, child.InnerText);
             }
 
-            Process(dictionary);
+            this.Process(dictionary);
         }
 
         public void Process(object obj)
@@ -99,7 +106,7 @@ namespace EPiServerChannelLib
             foreach (PropertyInfo propertyDef in obj.GetType().GetProperties())
             {
                 // If this property has an "Ignore" attribute, then skip it
-                if (propertyDef.GetCustomAttributes(typeof (IgnoreAttribute), false).Any())
+                if (propertyDef.GetCustomAttributes(typeof(IgnoreAttribute), false).Any())
                 {
                     continue;
                 }
@@ -107,13 +114,13 @@ namespace EPiServerChannelLib
                 dictionary.Add(propertyDef.Name, obj.GetType().GetProperty(propertyDef.Name).GetValue(obj));
             }
 
-            Process(dictionary);
+            this.Process(dictionary);
         }
 
         // This is the core Process method. All other overloaded calls to Process(whatever) simply turn their input into a Dictionary and then call this method.
         public void Process(Dictionary<string, object> dictionary)
         {
-            RecordManager.Init();
+            this.RecordManager.Init();
 
             var propertyKeys = new ArrayOfString();
             var propertyValues = new ArrayOfString();
@@ -132,7 +139,7 @@ namespace EPiServerChannelLib
             Guid episerverKey = RecordManager.GetEPiServerGuid(externalKey);
 
             // Add this to the list of keys that we know exist
-            ExistingKeys.Add(externalKey);
+            this.ExistingKeys.Add(externalKey);
 
             // Make the actual web service call
             ContentChannelServiceSoapClient service = GetService();
@@ -141,7 +148,7 @@ namespace EPiServerChannelLib
             Guid episerverId = service.ImportPage1(ChannelName, pageName, propertyKeys, propertyValues, CultureName, episerverKey, Guid.Empty, null);
 
             // Ensure this is valid inside the keymap
-            RecordManager.AddEPiServerGuid(externalKey, episerverId);
+            this.RecordManager.AddEPiServerGuid(externalKey, episerverId);
         }
 
         public int ProcessDeletions()
@@ -155,13 +162,13 @@ namespace EPiServerChannelLib
             foreach (string entry in pagesInEPiServer)
             {
                 // If you have something in the KeyMap which isn't in the ExistingKeys, then this item has been deleted since the last run
-                if (!ExistingKeys.Contains(entry))
+                if (!this.ExistingKeys.Contains(entry))
                 {
                     counter++;
 
                     // Delete the page from EPiServer, and delete it from the KeyMap
                     service.DeletePage(ChannelName, KeyMap[entry]);
-                    KeyMap.Remove(entry);
+                    this.KeyMap.Remove(entry);
                 }
             }
 
@@ -201,14 +208,13 @@ namespace EPiServerChannelLib
                 service = new ContentChannelServiceSoapClient();
             }
 
-
             return service;
         }
 
         // TODO: Could this be moved into Dispose()?  It needs to be called at the end of every usage of the object, because it rewrites the KeyMap
         public void Close()
         {
-            RecordManager.Close();
+            this.RecordManager.Close();
         }
     }
 }

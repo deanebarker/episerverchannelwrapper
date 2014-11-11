@@ -12,14 +12,14 @@ namespace EPiServerChannelLib.RecordManagers
 
         public FileSystemRecordManager()
         {
-            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key-map.txt");
-            keyMap = new Dictionary<string, Guid>();
+            this.path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key-map.txt");
+            this.keyMap = new Dictionary<string, Guid>();
         }
 
         public void Init()
         {
             // Only do this once...
-            if (initialized)
+            if (this.initialized)
             {
                 return;
             }
@@ -27,7 +27,7 @@ namespace EPiServerChannelLib.RecordManagers
             // TODO: This needs to be extracted into a provider-type model
             if (File.Exists(path))
             {
-                string text = File.ReadAllText(path);
+                string text = File.ReadAllText(this.path);
                 foreach (string line in text.Split(Environment.NewLine.ToCharArray()))
                 {
                     if (!line.Contains(":"))
@@ -35,21 +35,21 @@ namespace EPiServerChannelLib.RecordManagers
                         continue;
                     }
 
-                    keyMap.Add(
+                    this.keyMap.Add(
                         line.Split(':')[0],
                         Guid.Parse(line.Split(':')[1])
                         );
                 }
             }
 
-            initialized = true;
+            this.initialized = true;
         }
 
         public Guid GetEPiServerGuid(string key)
         {
-            if (keyMap.ContainsKey(key))
+            if (this.keyMap.ContainsKey(key))
             {
-                return keyMap[key];
+                return this.keyMap[key];
             }
 
             return Guid.Empty;
@@ -57,17 +57,17 @@ namespace EPiServerChannelLib.RecordManagers
 
         public void AddEPiServerGuid(string key, Guid pageGuid)
         {
-            keyMap.Remove(key);
-            keyMap.Add(key, pageGuid);
+            this.keyMap.Remove(key);
+            this.keyMap.Add(key, pageGuid);
         }
 
         public void Close()
         {
-            File.WriteAllText(path, String.Empty);
+            File.WriteAllText(this.path, String.Empty);
 
-            foreach (var entry in keyMap)
+            foreach (var entry in this.keyMap)
             {
-                File.AppendAllText(path, String.Concat(entry.Key, ":", entry.Value, Environment.NewLine));
+                File.AppendAllText(this.path, String.Concat(entry.Key, ":", entry.Value, Environment.NewLine));
             }
         }
     }
